@@ -1,0 +1,27 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global tariffs sync singleton
+    match /global_tariffs/{docId} {
+      allow read: if true;
+      allow write: if request.resource.data.tariffsJson is string 
+                   && request.resource.data.updatedAt is string;
+    }
+
+    // Company specific tariffs
+    match /company_tariffs/{companyId} {
+      allow read: if true;
+      allow write: if request.resource.data.tariffData is string 
+                   && request.resource.data.updatedAt is string;
+    }
+
+    // Shared saved budgets
+    match /saved_budgets/{budgetId} {
+      allow read: if true;
+      allow create, update: if request.resource.data.id is string
+                            && request.resource.data.budgetData is string;
+      allow delete: if true;
+    }
+  }
+}

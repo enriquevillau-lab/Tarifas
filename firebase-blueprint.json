@@ -1,0 +1,58 @@
+{
+  "entities": {
+    "CompanyTariffDoc": {
+      "title": "Company Tariff Document",
+      "description": "Stores customized rates and parameters for a specific towing company",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Company ID like allianz, asitur, etc." },
+        "name": { "type": "string", "description": "Company display name" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp of last update" },
+        "updatedBy": { "type": "string", "description": "User or device who updated" },
+        "tariffData": { "type": "string", "description": "Serialized JSON of complete CompanyTariff" }
+      },
+      "required": ["id", "updatedAt", "tariffData"]
+    },
+    "GlobalTariffSync": {
+      "title": "Global Tariff Sync",
+      "description": "Stores the complete synchronized package of all companies tariffs with timestamp",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Singleton doc ID 'current'" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp" },
+        "updatedBy": { "type": "string", "description": "Device or user description" },
+        "tariffsJson": { "type": "string", "description": "JSON stringified CompanyTariff array" },
+        "version": { "type": "string", "description": "Version number or timestamp" }
+      },
+      "required": ["id", "updatedAt", "tariffsJson"]
+    },
+    "SavedBudgetDoc": {
+      "title": "Saved Budget Document",
+      "description": "Cloud-synced budget calculation record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique UUID of the budget" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of creation" },
+        "type": { "type": "string", "description": "remolque or rescate" },
+        "companyId": { "type": "string", "description": "Company ID" },
+        "companyName": { "type": "string", "description": "Company display name" },
+        "budgetData": { "type": "string", "description": "Full serialized SavedBudget JSON" }
+      },
+      "required": ["id", "createdAt", "type", "companyId", "companyName", "budgetData"]
+    }
+  },
+  "firestore": {
+    "/global_tariffs/{docId}": {
+      "schema": "GlobalTariffSync",
+      "description": "Cloud synchronized active tariffs across all company terminals and devices"
+    },
+    "/company_tariffs/{companyId}": {
+      "schema": "CompanyTariffDoc",
+      "description": "Company specific customized tariff records"
+    },
+    "/saved_budgets/{budgetId}": {
+      "schema": "SavedBudgetDoc",
+      "description": "Shared history of created quotes and budgets"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "GrúasTarifas - Presupuestos Asistencia y Rescate",
+  "description": "Calculadora móvil de presupuestos para grúas, remolque y rescate según tarifas oficiales de compañías aseguradoras con desglose, matrícula y compartir por WhatsApp.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
