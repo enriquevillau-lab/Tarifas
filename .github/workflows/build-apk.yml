@@ -16,11 +16,10 @@ jobs:
         with:
           node-version: 22
       - name: Preparar Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '21'
-          cache: gradle
       - name: Instalar dependencias
         run: npm install
       - name: Crear proyecto Android
